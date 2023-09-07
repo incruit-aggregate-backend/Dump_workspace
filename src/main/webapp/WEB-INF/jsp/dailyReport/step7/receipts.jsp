@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%--test123--%>
+<%--<%@ include file="/WEB-INF/jsp/include/header.jsp" %>--%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -239,7 +239,6 @@
 
         }
     </style>
-
     <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -324,30 +323,62 @@
         </div>
 
         <ul class="mobile-navi-dept1">
-
-
             <li>
                 <p>
-                    <a class="left_menu" href="/carManage/list">
-                        <span style="font-weight: bold; color: blue;">①</span>
-                        운행 및 배차진행·전표관리
+                    <a class="left_menu" href="/dailyReport/driver">
+                        <span style="font-weight: bold; color: blue;">①</span> 기사용 메뉴
                     </a>
                 </p>
             </li>
-
             <li>
-                <p><a class="left_menu" href="/integrateDispatch/list">
-
-                    <span style="font-weight: bold; color: blue;">③</span>
-
-
-                    차량별 배차현황
-
-
-                </a></p>
+                <p>
+                    <a class="left_menu" href="/dailyReport/manager">
+                        <span style="font-weight: bold; color: blue;">②</span> 제출처용 메뉴
+                    </a>
+                </p>
             </li>
-
-
+            <li>
+                <p>
+                    <a class="left_menu" href="/dailyReport/form">
+                        <span style="font-weight: bold; color: blue;">③</span> 운행일보 등록
+                    </a>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <a class="left_menu" href="/dailyReport/list">
+                        <span style="font-weight: bold; color: blue;">④</span> 운행일보 조회
+                    </a>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <a class="left_menu" href="/dailyReport/carcareform">
+                        <span style="font-weight: bold; color: blue;">⑤</span> 차량관리 등록
+                    </a>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <a class="left_menu" href="/dailyReport/carcarelist">
+                        <span style="font-weight: bold; color: blue;">⑥</span> 차량관리 조회
+                    </a>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <a class="left_menu" href="/dailyReport/receipts">
+                        <span style="font-weight: bold; color: blue;">⑦</span> 제출처 전표 조회
+                    </a>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <a class="left_menu" href="/dailyReport/oldform">
+                        <span style="font-weight: bold; color: blue;">⑧</span> 제출처 주문 등록
+                    </a>
+                </p>
+            </li>
         </ul>
     </nav>
 </header>
@@ -424,10 +455,9 @@
                 $('.last').datepicker("option", "minDate", $(".fst").val());
             });
         }
-
-
     });
 </script>
+
 
 <section class="sub-contents-wrap maxwrap">
 
@@ -620,7 +650,7 @@
             <div style="width: 50%;  float: left;">
                 <label style="display: inline-flex;align-items: center;justify-content: flex-start;"><input
                         type="radio" name="searchType"
-                        value="car" checked/>차량 기준</label>
+                        value="car"/>차량 기준</label>
                 <%--                <label style="display: inline-flex;align-items: center;margin-top: 15px;justify-content: flex-start;width: 155px;"><input--%>
                 <%--                        type="radio" name="searchType"--%>
                 <%--                        value="tosite"/>하차지 기준</label>--%>
@@ -630,9 +660,7 @@
                 <%--                        value="operation"/>운행일 기준</label>--%>
             </div>
             <div style="margin-left: 50%;">
-                <label style="display: inline-flex;align-items: center; justify-content: flex-start;width: 155px;"><input
-                        type="radio" name="searchType"
-                        value="fromsite"/>운행일 기준</label>
+                <label style="display: inline-flex;align-items: center; justify-content: flex-start;width: 155px;"><input type="radio" name="searchType" value="fromsite"/>운행일 기준</label>
                 <%--                <br/>--%>
                 <%--                <label style="display: inline-flex;align-items: center;margin-top: 15px;justify-content: flex-start;width: 190px;"><input--%>
                 <%--                        type="radio" name="searchType"--%>
@@ -647,8 +675,37 @@
                onkeydown="if(event.keyCode == 13) return false;">
     </div>
 
-    <div class="">
+    <div id="tableshow">
         <div class="table-top" style="height: auto; display:  block;">
+<%--            <table class="list-table" style="margin-left: auto; margin-right: auto; width: 100%; margin-bottom: 20px;">--%>
+<%--                <colgroup>--%>
+<%--                    <col width="50%">--%>
+<%--                    <col width="50%">--%>
+<%--                </colgroup>--%>
+<%--                <tbody><tr>--%>
+<%--                    <th></th>--%>
+<%--                    <th>총 금액</th>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <th class="a-center">운반비 합계</th>--%>
+<%--                    <td class="a-right" style="padding: 10px;">--%>
+<%--                        5000--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <th class="a-center">수수료</th>--%>
+<%--                    <td class="a-right" style="padding: 10px;">--%>
+<%--                        2000--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <th class="a-center">운반비 공급가액</th>--%>
+<%--                    <td class="a-right" style="padding: 10px;">--%>
+<%--                        200000--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                </tbody>--%>
+<%--            </table>--%>
             <p class="total">
                 <span>데이터</span> <span class="cnt default-blue">1</span>
                 <span>건 (총대수 : <span class="cnt default-blue">1</span> 대)가 검색되었습니다.</span>
@@ -782,4 +839,5 @@
 <%--</footer>--%>
 </body>
 </html>
+
 <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>

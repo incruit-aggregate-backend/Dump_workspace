@@ -110,11 +110,11 @@ td{
 }
 
 textarea::placeholder {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-      padding-left: 5px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    padding-left: 5px;
 }
 
 
@@ -165,5 +165,4 @@ textarea::placeholder {
     }
 
 }
-
 
