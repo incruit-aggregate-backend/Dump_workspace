@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/")
@@ -24,7 +25,11 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginForm() {
+    public String loginForm(HttpServletResponse response) {
+        response.setHeader("Cache-Control","no-cache");
+        response.setHeader("Pragma","no-cache");
+        response.setDateHeader("Expires",0);
+
         return loginService.loginForm();
     }
 
@@ -54,7 +59,11 @@ public class LoginController {
     }
 
     @RequestMapping("/join/step2")
-    public String joinForm(Login joinData, Model model) {
+    public String joinForm(Login joinData, Model model,HttpServletResponse response) {
+        response.setHeader("Cache-Control","no-cache");
+        response.setHeader("Pragma","no-cache");
+        response.setDateHeader("Expires",0);
+
         return loginService.joinForm(joinData, model);
     }
 

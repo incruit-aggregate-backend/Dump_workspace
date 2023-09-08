@@ -82,7 +82,7 @@ $(document).ready(function() {
 //                 var isServiceWorkerSupported = 'serviceWorker' in navigator;
 //                 if (isServiceWorkerSupported) {
 //                     //브라우저에 Service Worker를 등록
-//                     navigator.serviceWorker.register('/resources/js/service-worker/service-worker.js', { scopre :'/'})
+//                     navigator.serviceWorker.register('/js/service-worker/service-worker.js', { scopre :'/'})
 //                         .then(function(registration) {
 //                             // console.log('[ServiceWorker] 등록 성공: ', registration.scope);
 //
