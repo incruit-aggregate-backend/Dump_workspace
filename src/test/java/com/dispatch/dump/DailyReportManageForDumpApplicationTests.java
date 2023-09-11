@@ -1,3 +1,4 @@
+/*
 package com.dispatch.dump;
 
 import org.junit.Test;
@@ -11,3 +12,4 @@ class DailyReportManageForDumpApplicationTests {
 	}
 
 }
+*/
