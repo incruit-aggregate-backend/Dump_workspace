@@ -1,24 +1,21 @@
 package com.dispatch.dump.commonModule.db.mapper;
 
-import com.dispatch.dump.commonModule.db.dto.DailyReportStep3Main;
+import com.dispatch.dump.commonModule.db.dto.DailyReportStep5;
 
-import java.util.List;
-
-public interface DailyReportStep3MainMapper {
+public interface DailyReportStep5Mapper {
 
     /* FUNCTION ::  등록 */
-    int insertDailyReportMain(DailyReportStep3Main dailyReportStep3Main);
+    int insertDailyReportStep5(DailyReportStep5 dailyReportMain);
 
-    /*DailyReportStep3Main findJoinDailyReportList(DailyReportStep3Main dailyReportStep3Main);*/
 
     /* FUNCTION :: 일보 수정 *//*
-    int updateDailyReport(DailyReport dailyReport);
+    int updateDailyReportStep5(DailyReport dailyReport);
 
     *//* FUNCTION :: 일보 상세보기 *//*
     DailyReport findDailyReportBySheetID(DailyReport dailyReport);
 
     /* FUNCTION :: 일보 리스트 조회(전체조건) */
-    DailyReportStep3Main findDailyReportMainList(DailyReportStep3Main dailyReportStep3Main);
+    //List<DailyReportMain> findDailyReportList(DailyReportMain dailyReportMain);
 
     //* FUNCTION :: 일보 리스트 조회 (제출처별) *//
 /*    List<DailyReport> findDailyReportListByCarSubmit(DailyReport dailyReport);
