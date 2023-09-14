@@ -22,71 +22,60 @@
   <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
-  />
+  />항
 
 
-<!-- 페이지 본문 시작 -->
-<div class="sub_con_wrapper wp80" id="maxwrap">
-  <!-- 페이지 제목 및 위치 정보 -->
-  <div class="subTitle_wrapper">
-    <h1>
+    <!-- 페이지 본문 시작 -->
+    <div class="sub_con_wrapper" id="maxwrap">
+      <!-- 페이지 제목 및 위치 정보 -->
+      <div class="subTitle_wrapper">
+        <h1>
           차량관리 차계부 조회
       <img src="/resources/image/step6/ico_que.png" alt="도움말" class="info" />
     </h1>
-    <ul class="location_ul">
-      <li><img src="/resources/image/step6/ico_home.png" alt="홈" /></li>
-          <li>차량관리 차계부 조회</li>
-      <img
-              src="/resources/image/step6/ico_arrow_right_gray.png"
-              alt="화살표"
-              class="arrow_right"
-      />
-    </ul>
   </div>
 
-       <!-- 조회 양식-->
-       <div class="operating_period content conTop">
-         <h1>
-           기간
-         </h1>
+      <form method="POST" action="/dailyReport/step6/search">
+        <input type="hidden" name="carNo" value=${sessionScope.loginInfo.userId} />
+            <!-- 조회 양식 -->
+            <div class="operating_period content conTop">
+                <h1>기간</h1>
+                <label class="start-text col" for="start-date">
+                    <input type="date" id="start-date" name="startDate" />
+                    <span>~</span>
+                    <input type="date" id="end-date" name="endDate" />
+                </label>
+            </div>
+            <div class="operating_period content" style="gap: 20px">
+                <h1>선택</h1>
+                <select class="detailSelect conbox" name="selectOption" id="selectOption">
+                    <option value="주유">주유</option>
+                    <option value="요소수">요소수</option>
+                    <option value="엔진오일">엔진오일</option>
+                    <option value="정비(수리)">정비(수리)</option>
+                    <option value="기타">기타</option>
+                </select>
+            </div>
 
-         <label class="start-text col" for="start-date">
-           <input type="date" id="start-date" />
-           <span>~</span>
-           <input type="date" id="end-date" />
-         </label>
-       </div>
-       <div class="operating_period content" style="gap: 20px">
-         <h1>
-           선택
-         </h1>
-         <select class="detailSelect conbox">
-           <option value="옵션1">주유</option>
-           <option value="옵션2">요소수</option>
-           <option value="옵션3">엔진오일</option>
-           <option value="옵션4">정비(수리)</option>
-           <option value="옵션5">기타</option>
-         </select>
-       </div>
+            <!-- 날짜 기준, 품목 기준 radio 버튼 추가 -->
+            <div class="inquiry_form section_check">
+                <div class="operating_period content conChoice" id="flex_important">
+                    <label>
+                        날짜 기준
+                        <input type="radio" name="searchType" value="date" checked />
+                    </label>
+                    <label>
+                        품목 기준
+                        <input type="radio" name="searchType" value="item" />
+                    </label>
+                </div>
+            </div>
 
-      <!-- 날짜 기준, 품목 기준 radio 버튼 추가 -->
-      <div class="inquiry_form section_check">
-        <div class="operating_period content conChoice" id="flex_important">
-          <label>
-            날짜 기준
-            <input type="radio" name="search-type" value="date" checked />
-          </label>
-          <label>
-            품목 기준
-            <input type="radio" name="search-type" value="item" />
-          </label>
-        </div>
-      </div>
-
-      <!-- 검색 버튼 -->
-      <div class="search_container">
-        <button class="search_btn common_btn" id="search-button">검색</button>
-      </div>
+            <!-- 검색 버튼 -->
+            <div class="search_container">
+                <button type="submit" class="search_btn common_btn" id="search-button">검색</button>
+            </div>
+        </form>
 
       <div class="result_search">
         <h1></h1>
