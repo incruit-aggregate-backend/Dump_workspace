@@ -124,10 +124,13 @@
     .today-menu th, .car-menu th{
             border: 1px solid black;
         }
-        .today-graph td, .car-graph td{
-             border: 1px solid black;
-             text-align: center;
-        }
+    .today-graph td, .car-graph td{
+           border: 1px solid black;
+           text-align: center;
+    }
+    .today-graph td:nth-child(6){
+           display: none;
+    }
     .car-menu th:nth-child(2) {
         border-left: 1px solid;
         border-right: 1px solid;
@@ -191,65 +194,32 @@
 
     <script>
         // 달력 옵션 추가 코드
-        $(function () {
-            //input을 datepicker로 선언
-            $("#datepicker1,#datepicker2").datepicker({
-                dateFormat: "yy-mm-dd", //달력 날짜 형태
-                showOtherMonths: true, //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                showMonthAfterYear: true, // 월- 년 순서가아닌 년도 - 월 순서
-                changeYear: true, //option값 년 선택 가능
-                changeMonth: true, //option값  월 선택 가능
-                showOn: "both", //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시
-                buttonImage:
-                    "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
-                buttonImageOnly: true, //버튼 이미지만 깔끔하게 보이게함
-                buttonText: "선택", //버튼 호버 텍스트
-                yearSuffix: "년", //달력의 년도 부분 뒤 텍스트
-                monthNamesShort: [
-                    "1월",
-                    "2월",
-                    "3월",
-                    "4월",
-                    "5월",
-                    "6월",
-                    "7월",
-                    "8월",
-                    "9월",
-                    "10월",
-                    "11월",
-                    "12월",
-                ], //달력의 월 부분 텍스트
-                monthNames: [
-                    "1월",
-                    "2월",
-                    "3월",
-                    "4월",
-                    "5월",
-                    "6월",
-                    "7월",
-                    "8월",
-                    "9월",
-                    "10월",
-                    "11월",
-                    "12월",
-                ], //달력의 월 부분 Tooltip
-                dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"], //달력의 요일 텍스트
-                dayNames: [
-                    "일요일",
-                    "월요일",
-                    "화요일",
-                    "수요일",
-                    "목요일",
-                    "금요일",
-                    "토요일",
-                ], //달력의 요일 Tooltip
-                minDate: "-5Y", //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                maxDate: "+5y", //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
-            });
+$(function () {
+    // input을 datepicker로 선언
+    $("#datepicker1, #datepicker2").datepicker({
+        dateFormat: "yy-mm-dd",
+        showOtherMonths: true,
+        showMonthAfterYear: true,
+        changeYear: true,
+        changeMonth: true,
+        showOn: "both",
+        buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+        buttonImageOnly: true,
+        buttonText: "선택",
+        monthNamesShort: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+        monthNames: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+        dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
+        dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
+        minDate: "-5Y",
+        maxDate: "+5Y",
+    });
+$(".ui-datepicker-title .ui-datepicker-month").each(function () {
+        $(this).append("월");
+    });
+    // 초기값을 오늘 날짜로 설정해줘야 합니다.
+    $("#datepicker2").datepicker("setDate", "today");
+});
 
-            //초기값을 오늘 날짜로 설정해줘야 합니다.
-            $("#datepicker2").datepicker("setDate", "today"); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
-        });
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -300,7 +270,7 @@
                     </li>
                     <li>
                         총 운행대 수 :
-                        <div class="carrying-car">대</div>
+                        <div id="total-car" class="carrying-car">대</div>
                     </li>
                     <li>
                         총 비용 금액 :
@@ -377,9 +347,7 @@
                     <th>하차지</th>
                     <th>품목</th>
                     <th>대수</th>
-                    <th>날짜</th>
                 </tr>
-
 
                 <c:forEach var="item" items="${list}">
                     <tr>
@@ -389,7 +357,6 @@
                         <td>${item.item}</td>
                         <td>${item.qty}</td>
                         <td>${item.date}</td>
-
                     </tr>
                 </c:forEach>
             </table>
@@ -431,5 +398,21 @@
             }
         }
     });
+</script>
+<script>
+var currentDate = new Date();
+var tableRows = document.querySelectorAll(".today-graph tr");
+
+tableRows.forEach(function(row) {
+  var dateCell = row.querySelector("td:nth-child(6)");
+  if (dateCell) {
+    var rowDate = new Date(dateCell.textContent);
+    if (rowDate.toDateString() === currentDate.toDateString()) {
+      row.style.display = "table-row";
+    } else {
+      row.style.display = "none";
+    }
+  }
+});
 </script>
 <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
