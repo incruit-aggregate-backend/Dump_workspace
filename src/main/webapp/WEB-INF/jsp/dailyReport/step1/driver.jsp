@@ -296,11 +296,17 @@
                 <ul class="basic-menu">
                     <li>
                         총 운반 금액 :
-                        <div class="carrying-money">원</div>
+                        <div class="carrying-money"> <%= request.getAttribute("totalTransportationCost") %>원</div>
                     </li>
+
+
                     <li>
                         총 운행대 수 :
-                        <div class="carrying-car">대</div>
+                        <div class="carrying-car"> 대</div>
+
+
+
+
                     </li>
                     <li>
                         총 비용 금액 :
@@ -377,14 +383,18 @@
                     <th>하차지</th>
                     <th>품목</th>
                     <th>대수</th>
+                    <th>날짜</th>
                 </tr>
-                <c:forEach var="item" items="${driverList}">
+
+
+                <c:forEach var="item" items="${list}">
                     <tr>
-                        <td>${item.fromsite}</td>
+                        <td>${item.carSubmit}</td>
                         <td>${item.fromsite}</td>
                         <td>${item.tosite}</td>
                         <td>${item.item}</td>
                         <td>${item.qty}</td>
+                        <td>${item.date}</td>
 
                     </tr>
                 </c:forEach>
