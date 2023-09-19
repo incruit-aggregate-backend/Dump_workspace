@@ -128,6 +128,9 @@
              border: 1px solid black;
              text-align: center;
         }
+    .today-graph td:nth-child(6){
+    display: none;
+    }
     .car-menu th:nth-child(2) {
         border-left: 1px solid;
         border-right: 1px solid;
@@ -377,7 +380,6 @@
                     <th>하차지</th>
                     <th>품목</th>
                     <th>대수</th>
-                    <th>날짜</th>
                 </tr>
 
 
@@ -431,5 +433,22 @@
             }
         }
     });
+</script>
+
+<script>
+var currentDate = new Date();
+var tableRows = document.querySelectorAll(".today-graph tr");
+
+tableRows.forEach(function(row) {
+  var dateCell = row.querySelector("td:nth-child(6)");
+  if (dateCell) {
+    var rowDate = new Date(dateCell.textContent);
+    if (rowDate.toDateString() === currentDate.toDateString()) {
+      row.style.display = "table-row";
+    } else {
+      row.style.display = "none";
+    }
+  }
+});
 </script>
 <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
