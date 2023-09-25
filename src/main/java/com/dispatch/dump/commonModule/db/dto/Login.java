@@ -19,5 +19,4 @@ public class Login {
     private String type;            // LINE :: 사용자 구분 선택값(덤프기사, 제출저 담당자)
     private boolean testUserChk;    // LINE ::  체험사용자 여부
 
-
 }

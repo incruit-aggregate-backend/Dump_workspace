@@ -111,7 +111,6 @@ textarea {
 }
 
 
-/* ! mobile */
 @media screen and (max-width: 280px) {
 	.GolSection {
 		max-width: 700px;
@@ -124,6 +123,8 @@ textarea {
 		font-size: 18px;
 		margin-top: 20px;
 		margin-bottom: 20px;
+		border-bottom: 1px solid #999;
+		padding-bottom: 20px;
 	}
 
 	.GolSection form {
@@ -180,6 +181,13 @@ textarea {
 		justify-content: space-between;
 	}
 
+	.golInputSpan {
+		padding-left: 120px;
+		line-height: 1.4;
+		font-size: 12px;
+		width: 100%;
+	}
+
 	.golLabel {
 		position: absolute;
 		width: 30%;
@@ -195,10 +203,8 @@ textarea {
 		width: 85%;
 	}
 
-	.checkbox{
-		width: 50%;
-		display: flex;
-		align-items: center;
+	.check67{
+		width: 20%;
 	}
 
 	label {
@@ -220,8 +226,6 @@ textarea {
 	.golInputSpan {
 		width: 100%;
 		padding-left: 70px;
-		line-height: 1.4;
-		font-size: 12px;
 		display: flex;
 		position: relative;
 	}
@@ -251,7 +255,12 @@ textarea {
 		margin-left: 2px;
 	}
 
-	.GolSection>div:first-of-type button {
+	.GolSection>div:first-of-type button:nth-child(2) {
+		background-color: #0068b7;
+		color: #fff;
+	}
+
+	.GolSection>div:first-of-type button:not(:nth-child(2)) {
 		background-color: #fff;
 	}
 
@@ -289,6 +298,7 @@ textarea {
 		top: 15px;
 		color: #fff;
 		cursor: pointer;
+		;
 	}
 
 	.GolSection [class ^='golPopup'] p {
@@ -340,7 +350,6 @@ textarea {
 	.GolSection table thead tr th,
 	.GolSection table tbody tr td {
 		border-left: 1px solid #ddd;
-		vertical-align: middle;
 	}
 
 	.GolSection table thead tr th:last-child,
@@ -354,22 +363,21 @@ textarea {
 		text-align: center;
 	}
 
-	.GolSection table tbody tr td:nth-child(2),
-	.GolSection table tbody tr td:nth-child(3) {
-		width: 15%;
+	.GolSection table tbody tr td:nth-child(1),
+	.GolSection table tbody tr td:nth-child(2) {
+		width: 16%;
 	}
 
-	.GolSection table tbody tr td:nth-child(4) {
+	.GolSection table tbody tr td:nth-child(3) {
 		width: 20%;
 	}
 
-	.GolSection table tbody tr td:nth-child(1),
-	.GolSection table tbody tr td:nth-child(5) {
+	.GolSection table tbody tr td:nth-child(4) {
 		width: 10%;
 	}
 
-	.GolSection table tbody tr td:nth-child(6) {
-		width: 22%;
+	.GolSection table tbody tr td:nth-child(5) {
+		width: 18%;
 	}
 }
 
@@ -386,6 +394,8 @@ textarea {
 		font-size: 18px;
 		margin-top: 20px;
 		margin-bottom: 20px;
+		border-bottom: 1px solid #999;
+		padding-bottom: 20px;
 	}
 
 	.GolSection form {
@@ -441,6 +451,18 @@ textarea {
 		justify-content: space-between;
 	}
 
+	.golInputSpan {
+		padding-left: 120px;
+		line-height: 1.4;
+		font-size: 12px;
+		width: 100%;
+	}
+
+	.golLabel {
+		position: absolute;
+		width: 30%;
+	}
+
 	.GolSection li:first-child{
 		/* justify-content: start; */
 		gap: 5px;
@@ -448,29 +470,16 @@ textarea {
 
 	input#datepicker {
 		height: 25px;
-		width: 80%;
 	}
 
-	.golSearch {
-		margin-left: -10%;
-	}
-
-	.checkbox{
-		width: 40%;
-		display: flex;
-		align-items: center;
-		/* margin-left: 5%; */
+	.check67{
+		width: 13%;
 	}
 
 	label {
 		/* display: flex; */
 		align-items: center;
 		gap: 5px;
-	}
-
-	.golLabel {
-		position: absolute;
-		width: 30%;
 	}
 
 	.golVoiceImg {
@@ -486,8 +495,6 @@ textarea {
 	.golInputSpan {
 		width: 100%;
 		padding-left: 90px;
-		line-height: 1.4;
-		font-size: 12px;
 		display: flex;
 		position: relative;
 	}
@@ -514,7 +521,12 @@ textarea {
 		margin-left: 3px;
 	}
 
-	.GolSection>div:first-of-type button {
+	.GolSection>div:first-of-type button:nth-child(2) {
+		background-color: #0068b7;
+		color: #fff;
+	}
+
+	.GolSection>div:first-of-type button:not(:nth-child(2)) {
 		background-color: #fff;
 	}
 
@@ -604,7 +616,7 @@ textarea {
 	.GolSection table thead tr th,
 	.GolSection table tbody tr td {
 		border-left: 1px solid #ddd;
-		vertical-align: middle;
+		/* vertical-align: middle; */
 	}
 
 	.GolSection table thead tr th:last-child,
@@ -618,21 +630,20 @@ textarea {
 		text-align: center;
 	}
 
-	.GolSection table tbody tr td:nth-child(2),
+	.GolSection table tbody tr td:nth-child(1),
+	.GolSection table tbody tr td:nth-child(2) {
+		width: 18%;
+	}
+
 	.GolSection table tbody tr td:nth-child(3) {
 		width: 18%;
 	}
 
 	.GolSection table tbody tr td:nth-child(4) {
-		width: 18%;
-	}
-
-	.GolSection table tbody tr td:nth-child(1),
-	.GolSection table tbody tr td:nth-child(5) {
 		width: 8%;
 	}
 
-	.GolSection table tbody tr td:nth-child(6) {
+	.GolSection table tbody tr td:nth-child(5) {
 		width: 17%;
 	}
 }
@@ -649,6 +660,7 @@ textarea {
 	.GolSection h2 {
 		font-size: 18px;
 		margin-bottom: 20px;
+		border-bottom: 1px solid #999;
 		padding-bottom: 20px;
 	}
 
@@ -901,6 +913,7 @@ textarea {
 	.GolSection h2 {
 		font-size: 18px;
 		margin-bottom: 20px;
+		border-bottom: 1px solid #999;
 		padding-bottom: 20px;
 	}
 

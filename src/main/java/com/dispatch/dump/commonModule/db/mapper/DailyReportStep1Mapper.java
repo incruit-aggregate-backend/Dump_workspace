@@ -8,14 +8,12 @@ import java.util.List;
 
 public interface DailyReportStep1Mapper {
 
-    List<DailyReportStep1Main> findDailyReportMainByCarSubmitTel(String uuserID);
+    List<DailyReportStep1Main> findDailyReportMainByCarSubmitTel(String userId);
     DailyReportStep1Sub findDailyReportMainBySheetID2(long sheetID2);
 
 
 
-    List<DailyReportStep1Sub> findJoinDailyReport(String uuserID);
-    int findJoinDailyReportForTotalTransportationCost(String uuserID);
-
-
+    List<DailyReportStep1Main> findJoinDailyReport(String userId);
+    int findJoinDailyReportForTotalTransportationCost(String userId);
 
 }

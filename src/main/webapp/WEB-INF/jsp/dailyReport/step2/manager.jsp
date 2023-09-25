@@ -8,20 +8,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
-     .homescreen {
-        padding: 5px;
-    }
-
     ul.basic-menu {
         display: grid;
 
         grid-template-columns: repeat(2, 1fr);
-        justify-content: left;
+        justify-content: center;
 
-
+        margin-bottom: 5%;
         margin-top: 5%;
-        margin-bottom: -2%;
-
+        margin-left: 12%;
 
     }
     .ui-datepicker-trigger {
@@ -36,7 +31,6 @@
         border: 2px solid #0068b7;
         font-size: 16px;
         font-weight: bold;
-        width: -webkit-fill-available;
     }
     #datepicker1,
     #datepicker2 {
@@ -44,7 +38,6 @@
         }
     .basic-menu li {
         display: flex;
-
     }
     .race-write,
     .race-search,
@@ -69,7 +62,6 @@
 
     .management {
         display: flex;
-        margin-bottom: -5%;
 
     }
 
@@ -134,58 +126,6 @@
          border: 1px solid black;
          text-align: center;
     }
-     .date-container {
-                margin-top: 50px;
-                position: relative;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                top: 50%;
-                text-align: left;
-            }
-     @media (min-width: 551px) {
-                .start-text {
-                    font-size: 18px;
-                    font-weight: bold;
-                }
-                .management {
-                    justify-content: center;
-                    margin-bottom: 5%;
-                }
-                #start-date,
-                #end-date {
-                    font-size: 18px;
-                }
-                #update-button {
-                    font-size: 18px;
-                }
-                .race-text,
-                .car-text {
-                    font-size: 18px;
-                }
-                .today-car,
-                .car-care,
-                .today-recruitment {
-                    font-size: 18px;
-                }
-                .today-menu,
-                .car-menu {
-                    height: 30px;
-                }
-
-               .basic-menu {
-                   place-items: center;
-
-              }
-               .date-container {
-                    margin-top: 50px;
-                    position: relative;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    top: 50%;
-                    text-align: center;
-                }
-            }
-
 </style>
 
 
@@ -285,8 +225,8 @@
     </script>
 
 
-    <article class="homescreen" >
-        <div class="date-container">
+    <article class="homescreen">
+        <div class="date-container" style="margin-left= 10%;text-align:center; ">
             <div class="date-picker">
 
                 <label class="start-text" for="start-date">운행일
@@ -295,31 +235,34 @@
                     <input id="datepicker2" readonly/>
                 </label>
                 <button id="update-button">조회</button>
-               <ul class="basic-menu">
-                   <li >
-                       총 운반 금액 :
-                       <div class="carrying-money" >
-                           <!-- 값을 표시하기 위한 div -->
-                           <div id="ttamount">${totalCarryingAmount}원</div>
-                       </div>
-                   </li>
-                   <li>
-                       총 운행대 수 :
-                       <div class="carrying-car"  id="tnumber">
-                           <!-- 값을 표시하기 위한 div -->
-                           <div id="tncars">${totalCarryingCars}대</div>
-                       </div>
-                   </li>
-               </ul>
+                <ul class="basic-menu">
+                    <li>
+                        총 운반 금액 :
+                        <div class="carrying-money" style="margin: 0 0 5% 0">
+                            <input text class="" size="5px ,5px">원</div>
+                    </li>
+                    <li>
+                        총 운행대 수 :
+                        <div class="carrying-car" style="margin: 0 0 5% 0">
+                            <input text class="" size="5px ,5px">대</div>
+                    </li>
+                    <li>
+                        총 비용 금액 :
+                        <div class="expense-money">
+                            <input text class="" size="5px ,5px">원</div>
+                    </li>
+                    <li>
+                        마지막 등록일 :
+                    </li>
+                </ul>
             </div>
         </div>
         <section class="management" >
 
             <div>
-                <a href="/dailyReport/receipts">
                 <div style="display: flex; align-items: center">
 
-                    <div>
+                    <div style="margin-light:5%; text-align:center; font-weight: 600">
                         <div class="race-check">
                             <img class="race-search" src="/resources/image/ico_check.png" alt="거래처전표조회" />
                         </div>
@@ -327,18 +270,21 @@
                         <span>거래처전표조회</span>
 
                     </div>
-                       </a>
-                       <a href="/dailyReport/olderform">
+
                     <div class="car-bundle">
-                        <div >
+                        <div style=" text-align:center; font-weight: 600">
                             <div class="car-registration">
                                 <img class="car-repair" src="/resources/image/ico_carrepair.png" alt="주문배차등록" />
                             </div>
                             <span>주문배차등록</span>
                         </div>
                     </div>
-                    </a>
-
+                    <div style=" text-align:center; font-weight: 600">
+                        <div class="car-check">
+                            <img class="car-search" src="/resources/image/ico_carcheck.png" alt="" />
+                        </div>
+                        <span>차량관리</span>
+                    </div>
                 </div>
         </section>
 
@@ -356,7 +302,6 @@
                 </tr>
             </table>
             <p class="car-care">제출 받은 일보</p>
-            <c:if test="${not empty carAndExpense}">
             <table class="car-graph">
                 <tr class="car-menu">
                     <th>차량번호</th>
@@ -376,7 +321,6 @@
                     </tr>
                 </c:forEach>
             </table>
-            </c:if>
             <p class="today-recruitment">금일 차량 모집 공고</p>
             <table class="car-graph">
                 <tr class="car-menu">
@@ -392,17 +336,18 @@
 
 </section>
 <script>
-    var tableRows = document.querySelectorAll("table tr");
+    // JavaScript로 HTML 테이블을 조작
+    var tableRows = document.querySelectorAll("table tr"); // 테이블의 모든 행을 선택
 
     tableRows.forEach(function(row) {
-        var qtyCell = row.querySelector("td:nth-child(5)");
+        var qtyCell = row.querySelector("td:nth-child(5)"); // 다섯 번째 열(td) 선택
 
-        if (qtyCell) {
+        if (qtyCell) { // 해당 셀이 존재하는 경우
             var cellText = qtyCell.textContent;
             var intValue = parseInt(cellText);
 
-            if (!isNaN(intValue)) {
-                qtyCell.textContent = intValue;
+            if (!isNaN(intValue)) { // 정수로 변환 가능한 경우
+                qtyCell.textContent = intValue; // 정수 값으로 업데이트
             }
         }
     });
