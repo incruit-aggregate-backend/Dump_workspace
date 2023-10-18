@@ -12,7 +12,6 @@
 <%
     // 모델로부터 받은 데이터를 변수에 저장
     List<DailyReportStep4> tSheet = (List<DailyReportStep4>) request.getAttribute("tSheet");
-    List<DailyReportStep4> todayList = (List<DailyReportStep4>) request.getAttribute("todayList");
 
 %>
 <section class="sub-contents-wrap maxwrap">
@@ -213,19 +212,22 @@
         </div>
         <div class="cashNbtns">
             <p>운반금액(원)<br>0</p>
-            <input type="button" value="일괄결재" onclick="submitBtn()">
-            <input type="button" value="일괄취소" id="cancelBtn" onclick="cancelBtn()">
+            <div>
+                <input type="button" value="일괄결재" onclick="submitBtn()">
+                <input type="button" value="일괄취소" id="cancelBtn" onclick="cancelBtn()">
+                <input type="button" value="이전화면" id="backBtn" onclick="history.go(-1)">
+            </div>
         </div>
         <div>
             <table class="list-table">
                 <colgroup>
                     <col width="16%">
-                    <col width="15%">
-                    <col width="15%">
+                    <col width="18%">
                     <col width="20%">
+                    <col width="21%">
                     <col width="20%">
                     <col width="10%">
-                    <col width="19%">
+                    <col class="lastCol" width="18%">
                 </colgroup>
                 <thead>
                     <tr>
@@ -235,30 +237,18 @@
                         <th class="th_header">하차지</th>
                         <th class="th_header">품목</th>
                         <th class="th_header">대수</th>
-                        <th class="th_header">운반단가</th>
+                        <th class="th_header">진행</th>
                     </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="today" items="<%=todayList%>">
-                        <tr>
-                            <td>${today.carSubmit}</td>
-                            <td>${today.date}</td>
-                            <td>${today.fromsite}</td>
-                            <td>${today.tosite}</td>
-                            <td>${today.item}</td>
-                            <td>${today.qty}</td>
-                            <td>${today.qtyup}</td>
-                        </tr>
-                    </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
 </section>
 
-<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
-
 <script src="/resources/js/dailyReport/step4/step4.js"></script>
 <script src="/resources/js/dailyReport/step4/calendar.js"></script>
 <script src="/resources/js/dailyReport/step4/AJAX.js"></script>
 <script src="/resources/js/dailyReport/step4/DOMContentLoaded.js"></script>
+<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>

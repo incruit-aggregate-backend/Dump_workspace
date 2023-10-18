@@ -15,7 +15,7 @@ public class DailyReportStep5 {
     private Integer useOil;             // LINE :: 주유량
     private String drvRem;          // LINE :: 비고란
     private boolean chk2;           // LINE :: 결제여부
-    private String repDate;         // LINE :: 교환예정일
+    private String  repDate;         // LINE :: 교환예정일
     private Integer repaddkm;           // LINE :: 교환주행거리
     private String rependdate;      // LINE :: 교환예정일
     private boolean rependchk;      // LINE :: 교환확인여부

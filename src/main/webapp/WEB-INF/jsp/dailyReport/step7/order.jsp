@@ -4,14 +4,12 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/step7/order.css">
 <script src="/resources/js/dailyReport/step7/pop.js"></script>
 <script src="/resources/js/dailyReport/step7/order.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
+<script src="/resources/js/dailyReport/step7/param.js"></script>
 <script type="text/javascript" src="/resources/js/dailyReport/form.js?jsVerType=20<fmt:formatDate value="<%=new java.util.Date()%>" pattern="yyyyMMddHHmmss"/>" ></script>
 <script type="text/javascript"
         src="/resources/js/dailyReport/list.js?jsVerType=20<fmt:formatDate value="<%=new java.util.Date()%>" pattern="yyyyMMddHHmmss"/>"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <script>
         function dvFristbtn() {
@@ -54,7 +52,7 @@
             <li>
               <label class="golLabel" for="date">주문일</label>
               <span class="golInputSpan"><input id="date" name="date"></span>
-              <button class="golSearch searchBtn" onClick="bindList()">조회</button>
+              <button class="golSearch searchBtn" onClick="searchDate()">조회</button>
               <div class="checkbox1">
                 <input id="chk1" type="checkbox">
                 <label class="check67" for="chk1">결재</label> <!--? 결제 체크박스 클릭시 수정 불가 -->
@@ -80,11 +78,11 @@
             </li>
             <li>
               <label class="golLabel" for="carNo"> 차량번호 <span><img class="golVoiceImg" src="/resources/image/step7/ico_mic.png" alt="음성인식 버튼"></span> </label>
-              <span class="golInputSpan"><input class="golIn" id="carNo" name="carNo" type="text" placeholder="미지정 또는 차량번호"></span>
-              <div class="checkbox2">
-                <input id="check67" type="checkbox">
-                <label class="check67" for="check67">모집공고</label> <!--? 결제 체크박스 클릭시 수정 불가 -->
-              </div>
+              <span class="golInputSpan"><input class="golIn" id="carNo" name="carNo" type="text" placeholder="미지정 또는 차량번호 또는 모집공고"></span>
+<%--              <div class="checkbox2">--%>
+<%--                <input id="chk67" type="checkbox">--%>
+<%--                <label class="check67" for="chk67">모집공고</label> <!--? 결제 체크박스 클릭시 수정 불가 -->--%>
+<%--              </div>--%>
             </li>
             <li>
               <label class="golLabel" for="Qtyup"> 운반비 </label>
@@ -97,7 +95,7 @@
     <div>
       <button class="opBtn" data-popName="golPop1">삭제</button>
       <button class="opBtn" data-popName="golPop2">취소</button>
-      <button class="opBtn" data-popName="golPop3" onClick="clickSaveBtn()">저장</button>
+      <button class="opBtn" data-popName="golPop3">저장</button>
       <button class="opBtn" data-popName="golPop4">이전화면</button>
     </div>
 
@@ -114,7 +112,7 @@
 			<div>
 				<span class="material-symbols-outlined clBtn">close</span>
 				<p>정말 <span style="font-weight: bold;">취소</span>하시겠습니까?</p>
-				<input class="confirmBtn" type="button" value="확인" onClick="cancelBtn()">
+				<input class="confirmBtn" type="button" value="확인" onClick="cancel()">
 				<input class="clBtn" type="button" value="취소">
 			</div>
 		</div>
@@ -123,7 +121,7 @@
 			<div>
 				<span class="material-symbols-outlined clBtn">close</span>
 				<p>정말 <span style="font-weight: bold;">저장</span>하시겠습니까?</p>
-				<input class="confirmBtn" type="button" value="확인" onClick="clickConfirmButton()">
+				<input class="confirmBtn" type="button" value="확인" onClick="save()">
 				<input class="clBtn" type="button" value="취소">
 			</div>
 		</div>

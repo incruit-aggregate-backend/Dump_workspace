@@ -14,7 +14,7 @@ function bindSummary() {
         type: "POST",
         data: $("[name=option_frm]").serialize(),
         success: function (data) {
-            printSummary(data);
+            printbindSummary(data);
         }
     });
 }
@@ -48,7 +48,7 @@ function carFindList() {
     });
 }
 
-function printSummary(data) {
+function printbindSummary(data) {
     const boutmoney = document.getElementById("boutmoney");
     const boutcar = document.getElementById("boutcar");
     const boutdate = document.getElementById("boutdate");
@@ -79,11 +79,13 @@ function groupAndSumData(searchResultData) {
 
     // 데이터를 그룹화하고 qty 값을 합산
     searchResultData.forEach(data => {
-        const key = `${data.sheetID}-${data.fromsite}-${data.tosite}-${data.item}`;
+        const key = `${data.carSubmit}-${data.fromsite}-${data.tosite}-${data.item}`;
 
         if (!groupedData[key]) {
             groupedData[key] = {
                 sheetID: data.sheetID,
+                currStatus: data.currStatus,
+                carSubmit:data.carSubmit,
                 fromsite: data.fromsite,
                 tosite: data.tosite,
                 item: data.item,
@@ -100,6 +102,8 @@ function groupAndSumData(searchResultData) {
 // ...
 //금일 차량 배차 현황
 function printDispatchList(searchResultData) {
+    // 데이터 소스 확인: AJAX 요청으로부터 받은 데이터에 CurrStatus 속성이 포함되어 있는지 확인
+    console.log(searchResultData);
     // 테이블 본문 내용 초기화
     const tableBody = document.querySelector("#menusub");
 
@@ -110,14 +114,18 @@ function printDispatchList(searchResultData) {
     groupedData.forEach(data => {
         const row = document.createElement("tr");
 
-        row.innerHTML = ` 
-            <td>${data.sheetID}</td>
+        // 'CurrStatus'가 '배차'인 경우 배경색 변경
+        if (data.currStatus === '배차') {
+            row.style.backgroundColor = '#84B8E8'; // 원하는 배경색으로 변경하세요.
+        }
+
+        row.innerHTML = `
+            <td>${data.carSubmit}</td>
             <td>${data.fromsite}</td>
-            <td>${data.tosite}</td> 
+            <td>${data.tosite}</td>
             <td>${data.item}</td>
-            <td>${data.qty}</td> 
-            
-         `;
+            <td>${data.qty}</td>
+        `;
         row.setAttribute("data-sheetID", data.sheetID);
 
         tableBody.appendChild(row);
@@ -126,7 +134,7 @@ function printDispatchList(searchResultData) {
 
 //금일 차량 모집 공고
 function printCarRecruitmentList(searchResultData) {
-    const tableBody = document.querySelector("#today-car-recruitment");
+    const tableBody = document.querySelector("#recruitment");
 
 //일단은 다 뜨게 한번 해보기
     searchResultData.forEach(data => {
@@ -136,9 +144,9 @@ function printCarRecruitmentList(searchResultData) {
             row.innerHTML = `
                 <td>${data.carSubmit}</td>
                 <td>${data.fromsite}</td>
-                <td>${data.tosite}</td> 
+                <td>${data.tosite}</td>
                 <td>${data.item}</td>
-                <td>${data.qty}</td> 
+                <td>${data.qty}</td>
             `;
 
 
@@ -149,7 +157,13 @@ function printCarRecruitmentList(searchResultData) {
 function printFindList(searchResultData) {
     // 테이블 본문 내용 초기화
     const tableBody = document.querySelector("#carsub");
-    //tableBody.innerHTML = "";
+    tableBody.innerHTML = "";
+
+    searchResultData.sort((a, b) => {
+            const dateA = new Date(a.rependdate);
+            const dateB = new Date(b.rependdate);
+            return dateA - dateB;
+        });
 
     // 검색 결과 데이터를 테이블 본문에 추가.
     searchResultData.forEach((data, index) => {
@@ -172,12 +186,11 @@ function printFindList(searchResultData) {
         <td>${data.drvClub}</td>
         <td>${formattedDate}</td>
         <td>${formattedRepaddkm}</td>
-         <td>${data.drvRem}</td>
+        <td>${data.drvRem}</td>
     `;
         row.setAttribute("data-drive-id", data.driveID);
         tableBody.appendChild(row);
     });
-
 }
 
 
@@ -200,16 +213,13 @@ function clickListStep3Redirect() {
     tableBody.addEventListener("click", (event) => {
         let sheetID = event.target.parentElement.getAttribute("data-sheetID");
         let url = "/dailyReport/form" + "?sheetID=" + sheetID;
-
-
         window.location.href = url;
+
     });
 }
-
 document.addEventListener("DOMContentLoaded", function () {
     // 리다이렉트
     clickListStep5Redirect();
     clickListStep3Redirect();
 });
-
 

@@ -38,6 +38,7 @@ function inputDataByParams(data) {
             continue;
         }
 
+
         if (key === "drvClub") {
             const itemList = document.querySelectorAll('input[name="drvClub"]');
             itemList[drvClubList[data[key]]].checked = true;

@@ -83,7 +83,7 @@
                         </li>
 
                         <li>
-                            <div style="width: 65%; height: var(--main-height)">
+                            <div style="width: 60%; height: var(--main-height)">
                                 <label class="t10">휴대폰</label>
                                 <span class="content">
                                     <input  type="tel" class="wp100 input" name="carSubmitTel" id="carSubmitTel" value="${!empty view ? view.carSubmitTel : ''}"
@@ -94,12 +94,12 @@
                             </div>
                             <div id="invite">
                                 <span id="isMember">거래처 상태</span>
-                                <button type="button" class="btn addBtn" id ="inviteBtn" onclick="$.invite()">초대하기</button>
+                                <button type="button" class="btn addBtn" id ="inviteBtn" onclick="$.invite()">신규회원 초대하기</button>
                             </div>
                         </li>
 
                         <li style="display: flex; justify-content: space-between;">
-                            <div class="datediv" style="width: 65%; height: var(--main-height)">
+                            <div class="datediv" style="width: 59%; height: var(--main-height)">
                                 <label class="t10">운행일</label>
                                 <span class="content">
                                     <input type="text" class="datepicker input" id="date" name="date" style="width: 100px; margin-left: 75px; text-align: left; padding-left: 5px;"
@@ -112,10 +112,10 @@
                                  <button type="button" class="dateBtn" id="nextDay" >&gt;</button>
                             </div>
                             --%>
-                            <div style="width: 50%; height: var(--main-height)">
-                                <label style="margin-left: 10px;">진행</label>
+                            <div style="width: 41%; height: var(--main-height)">
+                                <label>진행</label>
                                 <span class="content">
-                                    <select id="progress" style="width:60px; margin-left: 75px;">
+                                    <select id="CurrStatus" name="CurrStatus" style="width: 70px; margin-left: auto;">
                                         <option value="배차">배차</option>
                                         <option value="상차">상차</option>
                                         <option value="하차">하차</option>
@@ -128,7 +128,7 @@
 
                         <li>
                             <div id="mutualApproval">
-                                <label>제출처 제출 확인</label>
+                                <label>제출처 결재 확인</label>
                                 <input type="checkbox" class="chkbx" name="chk0" value="0" onChange="mutallyApproved()">
                             </div>
 

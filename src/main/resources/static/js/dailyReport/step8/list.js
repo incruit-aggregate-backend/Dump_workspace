@@ -39,7 +39,7 @@ function printList(searchResultData) {
                     <td>${order[4]}</td>
                     <td>${order[5]}</td>
                     <td>${order[6].toLocaleString()}</td>
-                    <td>${order[7]}</td>
+                    <td class="currStatus">${order[7]}</td>
                  `;
 
         no++;
@@ -47,11 +47,11 @@ function printList(searchResultData) {
         let currentCriteria;
 
         if (checkedNumber === 0) {
-            currentCriteria = order[0]; // 운행일 기준
+            currentCriteria = order[4]; // 차량 기준
         } else if (checkedNumber === 1) {
             currentCriteria = order[3]; // 품목 기준
         } else if (checkedNumber === 2) {
-            currentCriteria = order[4]; // 차량 기준
+            currentCriteria = order[0]; // 운행일 기준
         }
         console.log("prevCriteria : " + prevCriteria)
 
@@ -62,7 +62,10 @@ function printList(searchResultData) {
         prevCriteria = currentCriteria;
         console.log("currentCriteria : " + currentCriteria)
 
-        row.setAttribute("data-manager-id", data.sheetsubID);
+        row.setAttribute("receipt-subID", data.sheetsubID);
+        row.setAttribute("receipt-sheetID", data.sheetID);
+        row.setAttribute("receipt-writerIDX", data.writerIDX);
+        row.setAttribute("receipt-sheetSS2", data.sheetSS2);
         tableBody.appendChild(row);
     });
 

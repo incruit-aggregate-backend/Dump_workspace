@@ -7,18 +7,9 @@ import com.dispatch.dump.commonModule.db.mapper.DailyReportStep3MainMapper;
 import com.dispatch.dump.commonModule.db.mapper.DailyReportStep3SubMapper;
 import com.dispatch.dump.commonModule.db.mapper.LoginMapper;
 import com.dispatch.dump.commonModule.util.CommonUtil;
-import javax.servlet.http.HttpSession;
-
 import com.dispatch.dump.commonModule.util.FileUtil;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-
 import java.util.List;
 import java.util.Map;
 
@@ -104,8 +95,7 @@ public class Step3Service {
 
     //전체목록 조회
     public DailyReportStep3Main list(DailyReportStep3Main dailyReportStep3Main) {
-        dailyReportStep3Main.setSheetSS(Integer.parseInt(getSessionLoginData().getUuserID()));
-        return dailyReportStep3MainMapper.findCarSubmitInfo(dailyReportStep3Main);
+        return dailyReportStep3MainMapper.findAllCarSubmitInfo(dailyReportStep3Main);
     }
 
     //제출처 카테고리 생성용
@@ -159,15 +149,19 @@ public class Step3Service {
         return commonUtil.jsonFormatTransfer(rtnMap);
     }
 
-    /*운송정보 삭제- 조건 수정 예정*/
-    public String delete(int sheetsubID){
+    /*운송정보 삭제 - 조건 수정 예정*/
+    public String delete(DailyReportStep3Sub dailyReportStep3Sub){
         Map<String, Object> rtnMap = commonUtil.returnMap();
-        int sheetID=dailyReportStep3SubMapper.findBySheetsubID(sheetsubID);
+
+        int sheetID=dailyReportStep3SubMapper.findBySheetsubID(dailyReportStep3Sub.getSheetsubID());
+        System.out.println("sheetID는?"+sheetID);
         boolean chk1=dailyReportStep3MainMapper.findBySheetID(sheetID);
+        System.out.println("chk1은?"+chk1);
 
         if(chk1==false){
-            //dailyReportStep3Sub.setWriteridx2(Integer.parseInt(getSessionLoginData().getUuserID()));
-            dailyReportStep3SubMapper.deleteByOne(sheetsubID);
+            System.out.println("여기까지 도달");
+            dailyReportStep3Sub.setWriteridx2(Integer.parseInt(getSessionLoginData().getUuserID()));
+            dailyReportStep3SubMapper.deleteByOne(dailyReportStep3Sub);
             rtnMap.put("httpCode", 200);
         }else{
             rtnMap.put("httpCode", 422);
