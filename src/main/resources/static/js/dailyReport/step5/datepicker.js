@@ -24,6 +24,7 @@ $(document).ready(function() {
     var checkbox = $("#showHideCheckbox");
     var exchangeDateInput = $("#exchange-date");
 
+// 다음 교환주기 입력 체크박스 체크시 날짜인풋 공란으로 만듦
     checkbox.change(function() {
         if (checkbox.is(":checked")) {
             var today = new Date();
@@ -33,13 +34,7 @@ $(document).ready(function() {
             var dd = String(today.getDate()).padStart(2, "0");
             var formattedDate = yyyy + "-" + mm + "-" + dd;
 
-            exchangeDateInput.val(formattedDate);
-        } else {
             exchangeDateInput.val("");
         }
     });
 });
-
-//$("#exchange-date").datepicker('setDate', new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDay()));
-
-//document.getElementById('exchange-date').value = new Date().toISOString().substring(0, 10);;
