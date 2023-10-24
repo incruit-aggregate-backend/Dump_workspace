@@ -41,7 +41,6 @@ function getSheetIDDataBySelection(sheetID) {
     $.ajax({
         url: "/dailyReport/form/ajax/details",
         type: "POST",
-        async: false,
         data: {sheetID: sheetID},
         success: function (data) {
             console.log(data);
