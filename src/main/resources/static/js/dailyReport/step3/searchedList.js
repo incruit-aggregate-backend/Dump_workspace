@@ -222,7 +222,7 @@ function searchByCarsubmitTel(inputData) {
                     showTelList(data.list);
                 } else {
                     hideTelBox();
-                    $.list();
+                    //$.list();
                 }
             }
             listData();

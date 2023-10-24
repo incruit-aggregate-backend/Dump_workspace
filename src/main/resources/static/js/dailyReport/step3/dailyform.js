@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (sheetID !== null) {
         getSheetIDDataByParams(sheetID);
     }
-    //clickListThAndRedirect();//step4에 있음
-    $.showChk1;
     recoverState();
     approved();
     //searchByCarsubmitTel(carsubmittel.value); 여기서 이렇게 부르면 안됨!
@@ -47,6 +45,8 @@ function getSheetIDDataByParams(sheetID) {
             document.getElementById('salesman').value=data.salesman;
             openable2 = true;
             document.getElementById('CurrStatus').options[valueToIndex(data.currStatus)].selected = true;
+            showChk1(data.chk1);
+            showChk2(data.chk2);
             $.list();
         }
     })
@@ -115,17 +115,11 @@ $.showCarSubmitInfo = function(data){
 
     = data.carSubmitInfo.chk1;
     approved();
+    showChk1(data.carSubmitInfo.chk1);
 }
-//chk정보를 불러오기 위한 함수
-$.showChk1 = function(data) {
-    document.getElementById("checkbox").checked = data.chk1;
-    approved();
-};
 
 //제출처 정보 수정을 위한 sheetID 저장
 $.saveSheetID = function(data){
-
-
  document.getElementById("sheetID").value=data.carSubmitInfo.sheetID;
 }
 

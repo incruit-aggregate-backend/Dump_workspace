@@ -1,7 +1,6 @@
 const canvas = document.getElementById("canvas");
 const popup = document.getElementById('popup');
 const chk = document.getElementById('checkbox');
-const CurrStatus = document.getElementById('CurrStatus');
 var openable1 = false;
 var openable2 = false;
 var openable3 = false;
@@ -249,41 +248,6 @@ function clearInputs() {
 }
 
 
-/* 결재 체크박스 체크되면 밸류 바꾸기 */
-/* 결재 체크박스 체크되면 인풋 수정 불가 */
-function approved() {
-    const mtable = document.getElementById('main-table');
-    const inputElements = mtable.querySelectorAll('.input');
-    if (chk.checked) {
-        chk.value = '1';
-
-        // 거래처정보 인풋 비활성화
-        inputElements.forEach(function(input) {
-            input.disabled = true;
-            input.style.backgroundColor = "#F2F2F2";
-            input.style.color = "black"
-        });
-    } else {
-        chk.value = '0';
-        // 결재 취소하면 다시 활성화
-        inputElements.forEach(function(input) {
-            input.disabled = false;
-            input.style.backgroundColor = "#fff";
-        });
-    }
-}
-
-
-/* 제출하기 버튼을 클릭하면 결재 체크되고 제출체크가 체크하면되 결재도 체크됨*/
-function submitCheck() {
-    //const chk1 = document.getElementById('checkbox')
-    //chk.checked = true;
-    //chk.disabled = true;
-    CurrStatus.options[3].selected = true;
-    CurrStatus.disabled = true;
-    approved();
-}
-
 
 /* fillPop으로 인풋팝업이 뜰때는 버튼이 바뀌어야 한다. */
 let clickedRow;
@@ -338,9 +302,6 @@ function checkInputs() {
     return openable1 & openable2 & openable3 & openable4;
 }
 
-function mutuallyApproved() {
-
-}
 
 function openDrop() {
 

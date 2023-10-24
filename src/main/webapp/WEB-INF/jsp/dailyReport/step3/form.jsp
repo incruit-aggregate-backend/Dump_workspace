@@ -131,7 +131,7 @@
                         <li>
                             <div id="mutualApproval">
                                 <label>제출처 결재 확인</label>
-                                <input type="checkbox" class="chkbx" name="chk0" value="0" onChange="mutallyApproved()">
+                                <input type="checkbox" class="chkbx" name="chk0" value="0" onChange="mutuallyApproved(this.value)">
                             </div>
 
                             <div id="approval">
@@ -200,3 +200,4 @@
 <script src="/resources/js/dailyReport/step3/messages.js"></script>
 <script src="/resources/js/dailyReport/step3/voicememo.js"></script>
 <script src="/resources/js/dailyReport/step3/searchedList.js"></script>
+<script src="/resources/js/dailyReport/step3/checkbox.js"></script>
