@@ -259,7 +259,7 @@ function approved() {
 
         // 거래처정보 인풋 비활성화
         inputElements.forEach(function(input) {
-            input.disabled = true;
+            //input.disabled = true;
             input.style.backgroundColor = "#F2F2F2";
             input.style.color = "black"
         });
@@ -334,7 +334,7 @@ function listData() {
 
 
 function checkInputs() {
-    // 거래처정보가 저장되거나 수정 될 때는 모든 인풋이 차있어야 한다.
+    // 거래처정보가 저장되거나 수정 될 때는 모든 인onAutoSearch()풋이 차있어야 한다.
     return openable1 & openable2 & openable3 & openable4;
 }
 
