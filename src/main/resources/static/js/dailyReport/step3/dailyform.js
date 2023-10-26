@@ -28,7 +28,8 @@ function valueToIndex(value) {
 
 const carSubmit = document.getElementById('carSubmit');
 const date = document.getElementById('date');
-
+const salesman = document.getElementById('salesman')
+const carSubmitTel = document.getElementById('carSubmitTel');
 function getSheetIDDataByParams(sheetID) {
     document.getElementById('sheetID').value=sheetID;
 
@@ -38,17 +39,17 @@ function getSheetIDDataByParams(sheetID) {
         headers: {'Content-Type': 'application/json'},
         data: JSON.stringify({sheetID: sheetID}),
         success: function (data) {
-            console.log(data);
+
             //이 부분 추후 정리할 것
             carSubmit.value=data.carSubmit;
             openable1 = true;
             date.value=data.date;
-            document.getElementById('carSubmitTel').value=data.carSubmitTel;
+            carSubmitTel.value=data.carSubmitTel;
             openable3 = true;
             searchByCarsubmitTel(data.carSubmitTel);
-            document.getElementById('salesman').value=data.salesman;
+            salesman.value=data.salesman;
             openable2 = true;
-            document.getElementById('CurrStatus').options[valueToIndex(data.currStatus)].selected = true;
+            CurrStatus.options[valueToIndex(data.currStatus)].selected = true;
             imgIdx = Number(data.imgIdx);
             document.getElementById('imgIdx').value= Number(imgIdx);
             $.list();
@@ -66,6 +67,14 @@ $.emptyRow = function() {
     for (let i = 0; i < popinputs.length; i++) {
         popinputs[i].value = ""; // Set the value of each input field to an empty string
     }
+}
+
+$.emptyCarSubmit = function(){
+    carSubmit.value="";
+    salesman.value="";
+    carSubmitTel.value="";
+
+    $.list();
 }
 
 /*제출처, 운송정보 저장*/
@@ -122,8 +131,6 @@ $.showCarSubmitInfo = function(data){
 
     showChk1(data.carSubmitInfo.chk1);
 }
-
-
 
 //제출처 정보 수정을 위한 sheetID 저장
 $.saveSheetID = function(data){
@@ -290,14 +297,14 @@ $.deleteAll = function () {
         success : function (data) {
             var json = $.parseJSON(data);
             if(json.httpCode == 200){
-                alert("삭제 완료");
+                 $.emptyCarSubmit();
+                 $.successRemoval();
             }else{
-                alert("삭제 실패");
+                $.failRemoval();
             }
-
         },
         error : function (data) {
-            alert("삭제 에러");
+
         }
     })
 }

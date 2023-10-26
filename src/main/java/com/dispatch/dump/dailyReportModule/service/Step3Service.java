@@ -290,12 +290,10 @@ public class Step3Service {
     @Transactional
     public String saveSales(DailyReportStep3Main dailyReportStep3Main){
         Map<String, Object> rtnMap = commonUtil.returnMap();
-
         //로그인 한 사람 정보 확인 - 기사인지, 제출처인지
         Login login = new Login();
         login.setUserId(getSessionLoginData().getUserId());
         Login loginInfo = findByUserInfo(login);
-
         //휴대폰 번호로 제출처가 존재하는지 확인
         Login login2 = new Login();
         login2.setUserId(dailyReportStep3Main.getCarSubmitTel());
@@ -330,7 +328,10 @@ public class Step3Service {
         int result=dailyReportStep3MainMapper.approvalByCarSubmit(dailyReportStep3Main);
 
         if(result>0){
-            rtnMap.put("httpCode", 200);
+            rtnMap.put("httpCode", 200);//chk2 update 성공
+        }else{
+            rtnMap.put("httpCode", 200);//chk2 update 실패
+            
         }
         return commonUtil.jsonFormatTransfer(rtnMap);
     }

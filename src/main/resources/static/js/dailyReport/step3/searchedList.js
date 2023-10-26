@@ -216,8 +216,8 @@ function searchByCarsubmitTel(inputData) {
                 $("#inviteBtn").css("margin-left", "auto");
             }
             $.list();
-            //showChk1(data.chk1);
-            //showChk2(data.chk2);
+            console.log(data.list.chk1);
+//            showChk2(data.chk2);
             if (autoSearch == 1) { // 직접 타이핑해서 입력 중
                 if (carSubmitTel != "" && carSubmitTel != "010" && carSubmitTel.length >= 4) {
                     showTelBox();

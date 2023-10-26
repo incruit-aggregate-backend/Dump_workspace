@@ -58,7 +58,6 @@ function mutuallyApproved(sign) {
     $.saveChk2();
 }
 
-
 $.saveChk2 = function(){
     var formData = new FormData($("[name=frm]")[0]);
     $.ajax({
@@ -70,15 +69,15 @@ $.saveChk2 = function(){
         cache: false,
         success : function (data) {
              console.log("data는?"+data);
-            //alert("승인 완료");
         },
         error : function (data) {
-            //alert("승인 에러");
+
         }
     })
 }
 
 function submitCheck() {
+    // 제출하기버튼 누르면 제출선택가능,
     CurrStatus.options[3].selected = true;
     //CurrStatus.disabled = true;
 }
