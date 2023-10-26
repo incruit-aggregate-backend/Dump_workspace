@@ -184,6 +184,13 @@ function closePop() {
 
 
 
+/* 비고 사이즈 자동변경 */
+const freetext = document.getElementById('Rem');
+freetext.oninput = event => {
+    const inputValue = event.target;
+    freetext.style.height = 0
+    freetext.style.height = 22 + inputValue.scrollHeight + 'px';
+};
 
 
 /* 대수, 운반단가로 합계보여주기 */
@@ -336,9 +343,9 @@ function listData() {
 }
 
 
+
 function checkInputs() {
     // 거래처정보가 저장되거나 수정 될 때는 모든 인onAutoSearch()풋이 차있어야 한다.
     return openable1 & openable2 & openable3 & openable4;
 }
-
 
