@@ -11,7 +11,7 @@ import com.dispatch.dump.commonModule.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +48,7 @@ public class Step3Service {
 
         Login login=new Login();
         login.setUserId(dailyReportStep3Main.getCarSubmitTel());
-
+        
         Login userInfo=findByUserInfo(login);
         if(userInfo!=null){
             dailyReportStep3Main.setSheetSS2(Integer.parseInt(userInfo.getUuserID()));
@@ -56,9 +56,6 @@ public class Step3Service {
 
             DailyReportStep3Main carSubmitResult=dailyReportStep3MainMapper.findCarSubmitInfo(dailyReportStep3Main);
             if(carSubmitResult!=null){
-                //sheetSS2와 sheetsubSS2 update-> 회원가입할때 SS2를 update하는 과정을 거친다면 필요없음
-                //dailyReportStep3MainMapper.editBySheetSS2(dailyReportStep3Main);
-                //dailyReportStep3SubMapper.editBySheetsubSS2(dailyReportStep3Sub);
 
                 System.out.println("find main Data.");
                 dailyReportStep3Sub.setSheetID2(carSubmitResult.getSheetID());
@@ -72,8 +69,8 @@ public class Step3Service {
 
                 dailyReportStep3MainMapper.insertCarSubmitInfo(dailyReportStep3Main);
 
-                if (dailyReportStep3Main.getImageFile() != null) {
-                    fileUtil.fileUpload(dailyReportStep3Main.getImageFile(), dailyReportStep3Main.getSheetID());
+                if (!dailyReportStep3Main.getImageFile().isEmpty()) {
+                    uploadFileBySheetID(dailyReportStep3Main.getImageFile(), dailyReportStep3Main.getSheetID());
                 }
                 dailyReportStep3Sub.setSheetID2(dailyReportStep3Main.getSheetID());
                 saveTransPortInfo(dailyReportStep3Sub);
@@ -89,8 +86,8 @@ public class Step3Service {
                 dailyReportStep3Main.setSheetSS(Integer.parseInt(getSessionLoginData().getUuserID()));
                 dailyReportStep3MainMapper.insertCarSubmitInfo(dailyReportStep3Main);
 
-                if (dailyReportStep3Main.getImageFile() != null) {
-                    fileUtil.fileUpload(dailyReportStep3Main.getImageFile(), dailyReportStep3Main.getSheetID());
+                if (!dailyReportStep3Main.getImageFile().isEmpty()) {
+                    uploadFileBySheetID(dailyReportStep3Main.getImageFile(), dailyReportStep3Main.getSheetID());
                 }
                 dailyReportStep3Sub.setSheetID2(dailyReportStep3Main.getSheetID());
                 saveTransPortInfo(dailyReportStep3Sub);
@@ -109,8 +106,12 @@ public class Step3Service {
 
         List<DailyReportStep3Sub> resultData=null;
         if(loginInfo.getUserPosition().equals("driver")){
+
             dailyReportStep3Main.setSheetSS(Integer.parseInt(getSessionLoginData().getUuserID()));
+            System.out.println("전체정보?"+dailyReportStep3Main);
             resultData=dailyReportStep3SubMapper.selectAll(dailyReportStep3Main);
+            System.out.println("resultData?"+resultData);
+
         }else if(loginInfo.getUserPosition().equals("manager")){
             dailyReportStep3Main.setSheetSS2(Integer.parseInt(getSessionLoginData().getUuserID()));
             resultData=dailyReportStep3SubMapper.selectAll2(dailyReportStep3Main);
@@ -120,12 +121,13 @@ public class Step3Service {
 
     //제출처 카테고리 생성용
     public List<DailyReportStep3Main> searchByCarSubmit(DailyReportStep3Main dailyReportStep3Main) {
+        dailyReportStep3Main.setWriterIDX(Integer.parseInt(getSessionLoginData().getUuserID()));
         return dailyReportStep3MainMapper.findByCarSubmit(dailyReportStep3Main);
     }
 
     //제출처 연락처 카테고리 생성용
     public List<DailyReportStep3Main> searchByCarSubmitTel(DailyReportStep3Main dailyReportStep3Main) {
-        //dailyReportStep3Main.setWriterIDX(Integer.parseInt(getSessionLoginData().getUuserID()));
+        dailyReportStep3Main.setWriterIDX(Integer.parseInt(getSessionLoginData().getUuserID()));
         //가입된 회원정보가 있다면
         Login login2 = new Login();
         login2.setUserId(dailyReportStep3Main.getCarSubmitTel());
@@ -143,6 +145,7 @@ public class Step3Service {
 
     //영업사원 카테고리 생성용
     public List<DailyReportStep3Main> searchBySalesman(DailyReportStep3Main dailyReportStep3Main) {
+        dailyReportStep3Main.setWriterIDX(Integer.parseInt(getSessionLoginData().getUuserID()));
         return dailyReportStep3MainMapper.findBySalesman(dailyReportStep3Main);
     }
 
@@ -192,11 +195,20 @@ public class Step3Service {
             if(loginInfo2!=null){
                 System.out.println("sheetID는?"+dailyReportStep3Main.getSheetID());
                 System.out.println("CurrStatus는?"+dailyReportStep3Main.getCurrStatus());
+                if(!dailyReportStep3Main.getImageFile().isEmpty() && dailyReportStep3Main.getImgIdx() > 0) {
+                    updateFileBySheetID(dailyReportStep3Main.getImageFile(), dailyReportStep3Main.getImgIdx());
+                } else if (!dailyReportStep3Main.getImageFile().isEmpty() && dailyReportStep3Main.getImgIdx() == 0) {
+                    uploadFileBySheetID(dailyReportStep3Main.getImageFile(), dailyReportStep3Main.getSheetID());
+                }
                 dailyReportStep3MainMapper.editByCarSubmit2(dailyReportStep3Main);
             }else{
                 System.out.println("sheetID는?"+dailyReportStep3Main.getSheetID());
                 System.out.println("salesman은?"+dailyReportStep3Main.getSalesman());
-
+                if(!dailyReportStep3Main.getImageFile().isEmpty() && dailyReportStep3Main.getImgIdx() > 0) {
+                    updateFileBySheetID(dailyReportStep3Main.getImageFile(), dailyReportStep3Main.getImgIdx());
+                } else if (!dailyReportStep3Main.getImageFile().isEmpty() && dailyReportStep3Main.getImgIdx() == 0) {
+                    uploadFileBySheetID(dailyReportStep3Main.getImageFile(), dailyReportStep3Main.getSheetID());
+                }
                 dailyReportStep3MainMapper.editByCarSubmit1(dailyReportStep3Main);
             }
             rtnMap.put("httpCode", 200);
@@ -307,6 +319,30 @@ public class Step3Service {
         }
         return commonUtil.jsonFormatTransfer(rtnMap);
     }
+
+
+    public String approvalByCarSubmit(DailyReportStep3Main dailyReportStep3Main){
+        Map<String, Object> rtnMap = commonUtil.returnMap();
+        String CarNo=dailyReportStep3MainMapper.findByCarNo(dailyReportStep3Main.getSheetID());
+        dailyReportStep3Main.setCarNo(CarNo);
+        dailyReportStep3Main.setSheetSS2(Integer.parseInt(getSessionLoginData().getUuserID()));
+
+        int result=dailyReportStep3MainMapper.approvalByCarSubmit(dailyReportStep3Main);
+
+        if(result>0){
+            rtnMap.put("httpCode", 200);
+        }
+        return commonUtil.jsonFormatTransfer(rtnMap);
+    }
+
+    public void uploadFileBySheetID(MultipartFile file, int sheetID) {
+        fileUtil.fileUpload(file, sheetID);
+    }
+
+    public void updateFileBySheetID(MultipartFile file, int sheetID) {
+        fileUtil.updateImageFile(file, sheetID);
+    }
+
 
 }
 

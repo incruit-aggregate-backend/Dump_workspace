@@ -81,8 +81,11 @@
         select sheetID, carSubmit, carSubmitTel, salesman
         from tSheet
         where carSubmit like CONCAT('%', #{carSubmit}, '%')
+        AND
+        writerIDX=#{writerIDX}
         group by carSubmit
-        order by carSubmit asc;
+        order by carSubmit asc
+
     </select>
 
     <!--제출처 전화번호로 조회-->
@@ -90,6 +93,8 @@
         select sheetID, carSubmit, carSubmitTel, salesman
         from tSheet
         where carSubmitTel like CONCAT('%', #{carSubmitTel}, '%')
+        AND
+        writerIDX=#{writerIDX}
         group by carSubmitTel
         order by carSubmitTel asc
     </select>
@@ -99,6 +104,8 @@
         select sheetID, carSubmit, carSubmitTel, salesman
         from tSheet
         where salesman like CONCAT('%', #{salesman}, '%')
+        AND
+        writerIDX=#{writerIDX}
         group by salesman
         order by salesman asc;
     </select>
@@ -133,9 +140,11 @@
         chk1,
         chk2,
         CurrStatus,
-        sheetSS
+        sheetSS,
+        IFNULL(tfile.idx, 0) as imgIdx
         from tSheet
-        where sheetID=#{sheetID}
+        LEFT JOIN tfile ON tfile.t_idx = tsheet.sheetID
+        where sheetID = #{sheetID}
     </select>
     <!--chk2반영하기-->
 
@@ -267,28 +276,31 @@
 
     <!--제출처 결재 기능 -->
     <update id="approvalByCarSubmit" parameterType="DailyReportStep3Main">
-        update tSheet
-        set
-        chk2=#{chk2},
-        chk1=#{chk1},
-        CurrStatus=#{CurrStatus}
-        Where
+        UPDATE tSheet
+        SET
+        chk2 = #{chk2}
+        WHERE
         DATE_FORMAT(date, '%Y-%m-%d') = DATE_FORMAT(#{date}, '%Y-%m-%d')
         AND
         carSubmitTel = #{carSubmitTel}
-        AND
-        sheetSS = #{sheetSS} and sheetSS2 = (SELECT UuserID FROM tsitePW WHERE Userid= #{carSubmitTel})
+        AND (
+        (sheetSS2 = #{sheetSS2} AND sheetSS = (SELECT UuserID FROM tsitePW WHERE Userid = #{CarNo}))
+        OR
+        sheetSS IS NULL
+        OR
+        sheetSS = 0
+        )
     </update>
 
     <!--전체삭제-->
     <delete id="deleteByCarsubmitInfo" parameterType="DailyReportStep3Main">
-        delete from tSheet
-        where carSubmitTel = #{carSubmitTel}
+        DELETE FROM tSheet
+        WHERE carSubmitTel = #{carSubmitTel}
         AND DATE_FORMAT(date, '%Y-%m-%d') = DATE_FORMAT(#{date}, '%Y-%m-%d')
         AND chk1 = 0
         AND chk2 = 0
-        AND (sheetSS = #{sheetSS} and sheetSS2 = (SELECT UuserID FROM tsitePW WHERE Userid= #{carSubmitTel}) OR
-        sheetSS2 IS NULL OR sheetSS2=0)
+        AND (sheetSS = #{sheetSS} AND sheetSS2 = (SELECT UuserID FROM tsitePW WHERE Userid = #{carSubmitTel}) OR
+        sheetSS2 IS NULL OR sheetSS2 = 0)
     </delete>
 
 </mapper>

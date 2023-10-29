@@ -197,8 +197,7 @@ function offAutoSearch() {
     autoSearch = 0;
 }
 
-let autoCompleteData;
-
+let isJoined;
 function searchByCarsubmitTel(inputData) {
     const carSubmitTel = carsubmittel.val();
     $.ajax({
@@ -209,23 +208,26 @@ function searchByCarsubmitTel(inputData) {
             const isMember = $("#isMember");
             const inviteBtn = $("#inviteBtn");
             if (data.checkData != null) { // 가입된 거래처
+                isJoined = true;
                 isMember.text("회원");
                 $("#inviteBtn").css("margin-left", "5000px");
             } else {
+                isJoined = false;
                 isMember.text("");
                 $("#inviteBtn").css("margin-left", "auto");
             }
-
+            $.list();
+            //showChk1(data.chk1);
+            //showChk2(data.chk2);
             if (autoSearch == 1) { // 직접 타이핑해서 입력 중
                 if (carSubmitTel != "" && carSubmitTel != "010" && carSubmitTel.length >= 4) {
                     showTelBox();
                     showTelList(data.list);
                 } else {
                     hideTelBox();
-                    $.list();
                 }
             }
-            listData();
+            //listData();
         },
         error: function (error) {
             console.error('Ajax 요청 실패:', error);
