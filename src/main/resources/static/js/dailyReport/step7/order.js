@@ -5,12 +5,19 @@ function cancel() {
     emptyRow();
 }
 
-function getCheckParam(id){
+function getCheckParam(id) {
     const checkBox = document.getElementById(id);
-    return  "&" + id + "=" + checkBox.checked;
+    return "&" + id + "=" + checkBox.checked;
 }
 
 function save() {
+
+    if(document.querySelector('input[name="Qty"]').value == ''){
+        alert("대수를 입력해주세요");
+        document.querySelector("#golPop3").classList.remove("active");
+        return;
+    }
+
     $("#fromsite").prop("disabled", false);
     $("#tosite").prop("disabled", false);
     $("#item").prop("disabled", false);
@@ -34,7 +41,7 @@ function save() {
         async: false,
         success: function (data) {
             alert("저장이 완료되었습니다.");
-            bindList();
+            window.location.href = '/dailyReport/orderform';
         }
     })
 }
@@ -49,7 +56,6 @@ function bindList() {
             // 팝업 창을 숨기는 코드
             const golPop3 = document.querySelector("#golPop3");
             golPop3.classList.remove("active");
-            emptyRow();
             printTable(data);
         }
     })
@@ -101,8 +107,15 @@ function printTable(searchResultData) {
             <td>${order[1]}</td>
             <td>${order[2]}</td>
             <td>${order[3]}</td>
-            <td>${order[4]}</td>
-        `;
+            `;
+
+        if (data.carNo === "" || data.carNo === "미지정") {
+            row.innerHTML += `<td><button type="button" class="miJeongButton" onclick="openPopupTest(\'dispatchform\', ' + data.sheetsubID + ');">미지정</button></td>`;
+        } else if (data.carNo === "공고" || data.carNo === "모집공고") {
+            row.innerHTML += `<td><button class="miJeongButton">공고</button></td>`;
+        } else {
+            row.innerHTML += `<td>` + data.carNo + `</td>`;
+        }
 
         row.setAttribute("data-sheet-sub-id", data.sheetsubID);
         tableBody.appendChild(row);
@@ -111,6 +124,8 @@ function printTable(searchResultData) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+
+
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
 
@@ -119,13 +134,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (sheetsubID !== null) {
         getSheetsubIDDataByParams(sheetsubID);
     }
-    else{
-        bindList();
-    }
+
+    bindList();
     clickListThAndRedirect();
 });
 
-function orderDelete(){
+function orderDelete() {
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
 
@@ -144,14 +158,16 @@ function orderDelete(){
 }
 
 
-
-
 function getSheetsubIDDataByParams(sheetsubID) {
     $.ajax({
         url: "/dailyReport/ajax/details",
         type: "POST",
+        async: false,
         data: {sheetsubID: sheetsubID},
         success: function (data) {
+            console.log(data);
+            document.getElementById('sheetsubID').value = data.sheetsubID;
+            document.getElementById('sheetID2').value = data.sheetID2;
             document.getElementById('date').value = data.drvDate;
             document.getElementById('fromsite').value = data.fromsite;
             document.getElementById('tosite').value = data.tosite;
@@ -168,7 +184,15 @@ function clickListThAndRedirect() {
     const tableBody = document.querySelector("table tbody");
 
     tableBody.addEventListener("click", (event) => {
+
+        const row = event.target;
+        if (row.type === 'button') {
+            return;
+        }
+
         const parentRow = event.target.closest("tr");
+
+
         if (parentRow) {
             const sheetsubID = parentRow.getAttribute("data-sheet-sub-id");
             if (sheetsubID) {

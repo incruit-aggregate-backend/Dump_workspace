@@ -1,7 +1,6 @@
 const canvas = document.getElementById("canvas");
 const popup = document.getElementById('popup');
 const chk = document.getElementById('checkbox');
-const CurrStatus = document.getElementById('CurrStatus');
 var openable1 = false;
 var openable2 = false;
 var openable3 = false;
@@ -123,28 +122,40 @@ function loadInputValues() {
 
 /* function : open popup */
 function openPop() {
-    if(dateInput === '') { // 데이트 기록이 없으면 운송정보를 추가할 수 없다.
-        openable4 = false;
-    } else {
-        openable4 = true;
-    }
-    validateInput3(telInput.value)
-    if(chk.value === '0') {
-        if(openable1 & openable2 & openable3 & openable4 === true) {
-            popup.style.display = 'flex';
-            updateTotalAmount();
-            saved.forEach(function(elem){
-                elem.classList.add('hidden');
-            })
-            unsaved.forEach(function(elem) {
-                initialize(elem)
-            });
+    if(position == "driver") {
+        if(dateInput === '') { // 데이트 기록이 없으면 운송정보를 추가할 수 없다.
+            openable4 = false;
         } else {
-            $.inputInvalid();
+            openable4 = true;
+        }
+        validateInput3(telInput.value)
+        if(chk.value === '0') {
+            if(openable1 & openable2 & openable3 & openable4 === true) {
+                popup.style.display = 'flex';
+                updateTotalAmount();
+                saved.forEach(function(elem){
+                    elem.classList.add('hidden');
+                })
+                unsaved.forEach(function(elem) {
+                    initialize(elem)
+                });
+            } else {
+                $.inputInvalid();
+            }
+        } else {
+            $.checkedAlert();
         }
     } else {
-        $.checkedAlert();
+        popup.style.display = 'flex';
+        updateTotalAmount();
+        saved.forEach(function(elem){
+            elem.classList.add('hidden');
+        })
+        unsaved.forEach(function(elem) {
+            initialize(elem)
+        });
     }
+
 }
 
 const saved = popup.querySelectorAll('.saved')
@@ -169,17 +180,6 @@ function closePop() {
         initialize(elem)
     });
 }
-
-
-
-
-/* 비고 사이즈 자동변경 */
-const freetext = document.getElementById('Rem');
-freetext.oninput = event => {
-    const inputValue = event.target;
-    freetext.style.height = 0
-    freetext.style.height = 22 + inputValue.scrollHeight + 'px';
-};
 
 
 /* 대수, 운반단가로 합계보여주기 */
@@ -237,7 +237,7 @@ function showOrHide() {
     }
 }
 
-/* 전체 삭제 버튼 누르면 인풋 비우기 */
+/* 전체 삭제 버튼 누르면 인풋 비우기*/
 function clearInputs() {
     const inputs = canvas.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) {
@@ -259,7 +259,7 @@ function approved() {
 
         // 거래처정보 인풋 비활성화
         inputElements.forEach(function(input) {
-            input.disabled = true;
+            //input.disabled = true;
             input.style.backgroundColor = "#F2F2F2";
             input.style.color = "black"
         });
@@ -276,9 +276,7 @@ function approved() {
 
 /* 제출하기 버튼을 클릭하면 결재 체크되고 제출체크가 체크하면되 결재도 체크됨*/
 function submitCheck() {
-    //const chk1 = document.getElementById('checkbox')
-    //chk.checked = true;
-    //chk.disabled = true;
+    console.log("submitcheck");
     CurrStatus.options[3].selected = true;
     CurrStatus.disabled = true;
     approved();
@@ -338,10 +336,3 @@ function checkInputs() {
     return openable1 & openable2 & openable3 & openable4;
 }
 
-function mutuallyApproved() {
-
-}
-
-function openDrop() {
-
-}
