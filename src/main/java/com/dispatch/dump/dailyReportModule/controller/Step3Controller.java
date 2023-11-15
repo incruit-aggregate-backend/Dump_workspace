@@ -30,8 +30,8 @@ public class Step3Controller {
     /*step4요청 : sheetID로 조회 후 제출처정보 반영*/
     @RequestMapping(value = "/form/ajax/details", method = RequestMethod.POST)
     @ResponseBody
-    public DailyReportStep3Main carSubmitDetails(int sheetID) {
-        return step3Service.findTCarSubmitDetails(sheetID);
+    public DailyReportStep3Main carSubmitDetails(@RequestBody DailyReportStep3Main dailyReport) {
+        return step3Service.findTCarSubmitDetails(dailyReport.getSheetID());
     }
 
 
@@ -116,8 +116,28 @@ public class Step3Controller {
     /*전체삭제*/
     @RequestMapping(value = "/workspace/ajax/deleteAll", method = RequestMethod.POST)
     @ResponseBody
-    public void delete(DailyReportStep3Main dailyReportStep3Main) {
-        step3Service.deleteAll(dailyReportStep3Main);
+    public String deleteAll(DailyReportStep3Main dailyReportStep3Main) {
+        return step3Service.deleteAll(dailyReportStep3Main);
     }
+
+    @RequestMapping(value = "/workspace/ajax/saveSales", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveSales(DailyReportStep3Main dailyReportStep3Main) {
+        return step3Service.saveSales(dailyReportStep3Main);
+    }
+
+
+    @RequestMapping(value = "/workspace/ajax/approval/carsubmit", method = RequestMethod.POST)
+    @ResponseBody
+    public String approvalByCarSubmit(DailyReportStep3Main dailyReportStep3Main) {
+        return step3Service.approvalByCarSubmit(dailyReportStep3Main);
+    }
+
+    @RequestMapping(value = "/workspace/ajax/submit", method = RequestMethod.POST)
+    @ResponseBody
+    public String submitMainData(DailyReportStep3Main dailyReportStep3Main) throws Exception {
+       return step3Service.submitMainData(dailyReportStep3Main);
+    }
+
 }
 

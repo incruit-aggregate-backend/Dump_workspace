@@ -35,10 +35,10 @@
                 <!--                    상세검색 열고 닫는 스크립트-->
                 <script>
                     $(".adsearch_btn").on("click", function (){
-                        if ($(this).text() == '상세검색 닫기 ▼'){
+                        if ($(this).text() == '상세검색 닫기 ▲'){
                             $(this).text('상세검색 열기 ▼');
                         } else {
-                            $(this).text('상세검색 닫기 ▼');
+                            $(this).text('상세검색 닫기 ▲');
                         }
                         $(".search_ul").toggle();
                     })
@@ -215,7 +215,7 @@
             <div>
                 <input type="button" value="일괄결재" onclick="submitBtn()">
                 <input type="button" value="일괄취소" id="cancelBtn" onclick="cancelBtn()">
-                <input type="button" value="이전화면" id="backBtn" onclick="history.go(-1)">
+                <input type="button" value="이전화면" id="backBtn" onclick="window.location.href=document.referrer;">
             </div>
         </div>
         <div>

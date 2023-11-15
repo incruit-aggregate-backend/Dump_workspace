@@ -15,5 +15,7 @@ public interface DailyReportStep7SubMapper {
     /* FUNCTION ::  삭제 */
     int deleteByOne(DailyReportStep7Sub dailyReportStep7Sub);
 
-    DailyReportStep7Sub findSubInfoBySheetSubID(int sheetSubID);
+    DailyReportStep7Sub findSubInfoBySheetSubID(int sheetsubID);
+
+    int editSubmitInfo(DailyReportStep7Sub DailyReportStep7Sub);
 }

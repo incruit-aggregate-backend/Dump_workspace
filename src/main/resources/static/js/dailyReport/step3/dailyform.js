@@ -1,16 +1,14 @@
+let imgIdx;
 document.addEventListener("DOMContentLoaded", function () {
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     let sheetID = params.get("sheetID");
+    changeByPosition();
 
     if (sheetID !== null) {
         getSheetIDDataByParams(sheetID);
     }
-    //clickListThAndRedirect();//step4에 있음
-    $.showChk1;
-    recoverState();
-    approved();
-    //searchByCarsubmitTel(carsubmittel.value); 여기서 이렇게 부르면 안됨!
+    recoverState(); // 운송비 보여주는 체크박스
 });
 
 
@@ -28,25 +26,31 @@ function valueToIndex(value) {
     }
 }
 
+const carSubmit = document.getElementById('carSubmit');
+const date = document.getElementById('date');
+const salesman = document.getElementById('salesman')
+const carSubmitTel = document.getElementById('carSubmitTel');
 function getSheetIDDataByParams(sheetID) {
     document.getElementById('sheetID').value=sheetID;
-
     $.ajax({
         url: "/dailyReport/form/ajax/details",
         type: "POST",
-        data: {sheetID: sheetID},
+        headers: {'Content-Type': 'application/json'},
+        data: JSON.stringify({sheetID: sheetID}),
         success: function (data) {
             //이 부분 추후 정리할 것
-            document.getElementById('carSubmit').value=data.carSubmit;
+            carSubmit.value=data.carSubmit;
             openable1 = true;
-            document.getElementById('date').value=data.date;
-            document.getElementById('carSubmitTel').value=data.carSubmitTel;
+            date.value=data.date;
+            carSubmitTel.value=data.carSubmitTel;
             openable3 = true;
             searchByCarsubmitTel(data.carSubmitTel);
-            document.getElementById('salesman').value=data.salesman;
+            salesman.value=data.salesman;
             openable2 = true;
-            document.getElementById('CurrStatus').options[valueToIndex(data.currStatus)].selected = true;
+            CurrStatus.options[valueToIndex(data.currStatus)].selected = true;
             $.list();
+            showChk1(data.chk1);
+            showChk2(data.chk2);
         }
     })
 }
@@ -57,6 +61,14 @@ $.emptyRow = function() {
     for (let i = 0; i < popinputs.length; i++) {
         popinputs[i].value = ""; // Set the value of each input field to an empty string
     }
+}
+
+$.emptyCarSubmit = function(){
+    carSubmit.value="";
+    salesman.value="";
+    carSubmitTel.value="";
+
+    $.list();
 }
 
 /*제출처, 운송정보 저장*/
@@ -95,8 +107,6 @@ $.list = function() {
             //제출처 정보 채우기
             if(null!==data.carSubmitInfo){
                 $.showCarSubmitInfo(data);
-            }
-            if(null!==data.carSubmitInfo){
                 $.saveSheetID(data);
             }
         },
@@ -110,25 +120,22 @@ $.showCarSubmitInfo = function(data){
     //currStatus정보 채우기
     document.getElementById('CurrStatus').options[valueToIndex(data.carSubmitInfo.currStatus)].selected = true;
     //chk정보 채우기
-    document.getElementById("checkbox").checked = data.carSubmitInfo.chk1;
+    document.getElementById("checkbox").checked= data.carSubmitInfo.chk1;
     approved();
+
+    showChk1(data.carSubmitInfo.chk1);
 }
-//chk정보를 불러오기 위한 함수
-$.showChk1 = function(data) {
-    document.getElementById("checkbox").checked = data.chk1;
-    approved();
-};
+
+
 
 //제출처 정보 수정을 위한 sheetID 저장
 $.saveSheetID = function(data){
-
-
- document.getElementById("sheetID").value=data.carSubmitInfo.sheetID;
+    document.getElementById("sheetID").value=data.carSubmitInfo.sheetID;
 }
 
 function showTransportList(data){
     let html;
-    if (!data.transPortList) {
+    if (data.transPortList.length === 0) {
         html = '   <td colspan="5" style="text-align: center;">저장된 운송 정보가 없습니다</td>';
     } else {
         // 서버에서 반환된 데이터를 이용하여 테이블 형태로 생성
@@ -246,25 +253,20 @@ $.deleteRow = function() {
 // 제출처 정보 수정
 // 기사가 결재 체크햇으면 해재해놓고 다시
 $.editSales = function(){
-    alert("기능 수정 중")
-    /*var sheetID = $("#sheetID").val();
-    var salesman = $("#salesman").val();
-    var carSubmit = $("#carSubmit").val();
-    var carSubmitTel = $("#carSubmitTel").val();
-    var CurrStatus = $("#CurrStatus").val();
-    var chk1 = $("#checkbox").val();
+    let restore = false;
+    if(CurrStatus.disabled == true) {
+        restore = true;
+        CurrStatus.disabled = false;
+    }
+    var formData = new FormData($("[name=frm]")[0]);
     if (checkInputs() === 1) {
         $.ajax({
             url:"/dailyReport/workspace/ajax/edit/carSubmit",
             type:"POST",
-            data:{
-                "sheetID":sheetID,
-                "salesman":salesman,
-                "carSubmit":carSubmit,
-                "carSubmitTel":carSubmitTel,
-                "CurrStatus" : CurrStatus,
-                "chk1": chk1
-            },
+            data:formData,
+            processData: false,
+            contentType: false,
+            cache: false,
             success : function (data) {
                 var json = $.parseJSON(data);
                 if(json.httpCode == 200){
@@ -278,11 +280,78 @@ $.editSales = function(){
                 console.error('수정 실패:', error);
             }
         })
+        if(restore == true) {
+            CurrStatus.disabled = true;
+        }
     } else {
         $.inputInvalid();
-    }*/
+    }
+}
+
+
+
+//전체삭제
+$.deleteAll = function () {
+    var formData = new FormData($("[name=frm]")[0]);
+    $.ajax({
+        url : "/dailyReport/workspace/ajax/deleteAll",
+        type : "POST",
+        data : formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success : function (data) {
+            if(json.httpCode == 200){
+                 $.emptyCarSubmit();
+                 $.successRemoval();
+            } else {
+                $.failRemoval();
+            }
+
+        },
+        error : function (data) {
+            alert("삭제 에러");
+        }
+    })
+}
+
+function driverToManager() {
+    if(isJoined == true) {
+        $.saveSales();
+        $.editSales();
+    } else {
+        $.notMember();
+    }
+}
+
+$.saveSales = function(){
+    var formData = new FormData($("[name=frm]")[0]);
+    $.ajax({
+        url : "/dailyReport/workspace/ajax/saveSales",
+        type : "POST",
+        data : formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success : function (data) {
+            submitCheck();
+            showChk1(true);
+            $.successSubmit();
+        },
+        error : function (data) {
+            $.failSubmit();
+        }
+    })
 }
 
 $.invite = function () {
     console.log("문자를 보내 초대를 해보자.")
+}
+
+function submitConfirmation() {
+    $("[name=chk1]").prop("checked", true);
+
+    $("[name=CurrStatus] option[value=제출]").prop('disabled', false);
+    $("[name=CurrStatus] option[value=제출]").prop('selected', true);
+
 }

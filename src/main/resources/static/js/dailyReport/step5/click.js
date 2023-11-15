@@ -37,6 +37,8 @@ function save() {
 //        }
 //    }
 
+
+ // 인풋이 공란일 때 빈값이 디비에 저장 가능하게 해주는 코드
     if (document.querySelector('input[name="useOil"]').value.length === 0) {
         document.querySelector('input[name="useOil"]').value = '';
     }
@@ -96,7 +98,7 @@ function deleteData(){
         data : {driveID : $("[name=driveID]").val()},
         success: function (data) {
             alert('삭제 되었습니다.');
-            location.reload(true)
+            $("#drvpop1").hide();
             bindList();
         }
     })
